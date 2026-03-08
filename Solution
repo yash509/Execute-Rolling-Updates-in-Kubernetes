@@ -1,0 +1,45 @@
+Ques:-
+
+An application currently running on the Kubernetes cluster employs the nginx web server. The Nautilus application development team has introduced some recent changes that need deployment. They've crafted an image nginx:1.18 with the latest updates.
+Execute a rolling update for this application, integrating the nginx:1.18 image. The deployment is named nginx-deployment.
+Ensure all pods are operational post-update.
+
+
+
+Soln:-
+
+Step 1: Check if the existing Deployment and the existing Pods are active and running or not
+
+kubectl get deploy
+kubectl get pods
+
+
+
+Step 2: Describe a running existing Pod
+
+kubectl describe pods <pod name> (check for the current version of the image running inside the container using the describe command)
+
+
+
+Step 3: Update the version of the Image (We have to use set image command with deployment name and container name)
+
+kubectl set image deployments/<deployment name> <container name>=<new image version>
+
+
+
+Step 4: Rollout Restart the Deployment
+
+kubectl rollout restart deployments/<deployment name>
+
+
+
+Step 5: Let's verify the rollout status
+
+kubectl rollout status deployments/<deployment name>
+
+
+
+Step 6: Verification
+
+kubectl get pods
+kubectl describe pods <pod name> (check and verify for the new version of the image)
